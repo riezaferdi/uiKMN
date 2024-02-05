@@ -106,8 +106,9 @@ class _HomePageState extends State<HomePage> {
                 height: 50,
                 //color: Colors.green,
                 decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.circular(10)),
+                  color: Colors.blue,
+                  borderRadius: BorderRadius.circular(10),
+                ),
                 child: const Center(
                   child: Text(
                     'Login',

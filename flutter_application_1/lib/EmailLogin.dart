@@ -39,6 +39,11 @@ class _HomePageState extends State<HomePage> {
       );
 
       if (response.statusCode == 200) {
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   const SnackBar(
+        //     content: Text("Login Successfully!"),
+        //   ),
+        // );
         Navigator.push(
           context,
           MaterialPageRoute(

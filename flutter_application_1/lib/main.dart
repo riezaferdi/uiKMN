@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'LoginPage.dart';
 
 const List<String> list = <String>[
   'EN',
@@ -112,12 +113,27 @@ class TopBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.values[3],
-      children: const [
-        Text(
-          'Login',
-          style: TextStyle(fontSize: 20, color: Colors.blue),
+      children: [
+        GestureDetector(
+          onTap: () {
+            // if (snapshot.hasData) {
+            //   albumProviders.selectAlbum(
+            //     snapshot.data![index],
+            //   );
+            // }
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const LoginPage(),
+              ),
+            );
+          },
+          child: const Text(
+            'Login',
+            style: TextStyle(fontSize: 20, color: Colors.blue),
+          ),
         ),
-        Row(
+        const Row(
           children: [
             Icon(
               Icons.notifications_none,

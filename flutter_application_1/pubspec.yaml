@@ -9,6 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  http: ^0.13.4
 
 dev_dependencies:
   flutter_test:
@@ -19,5 +20,6 @@ flutter:
   uses-material-design: true
   assets:
   - assets/logo/
+  - assets/images/
   - assets/images/promotion/
   - assets/images/testimonials/

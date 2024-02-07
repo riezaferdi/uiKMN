@@ -1,17 +1,38 @@
 import 'package:flutter/material.dart';
 import 'LoginPage.dart';
+import 'MyFamily.dart';
 
 const List<String> list = <String>[
   'EN',
   'ID',
 ];
 
+const List<Widget> _post = <Widget>[
+  BodyApp(),
+  //ActivityBody(),
+  MyFamilyBody(),
+  //ProfileBody(),
+];
+
 void main() {
   runApp(const MainApp());
 }
 
-class MainApp extends StatelessWidget {
+class MainApp extends StatefulWidget {
   const MainApp({super.key});
+
+  @override
+  State<MainApp> createState() => _MainAppState();
+}
+
+class _MainAppState extends State<MainApp> {
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

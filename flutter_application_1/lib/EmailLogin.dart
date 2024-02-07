@@ -2,16 +2,14 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import "package:flutter_bloc/flutter_bloc.dart";
 //void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Email Login',
-      home: HomePage(),
-      debugShowCheckedModeBanner: false,
-    );
+    return HomePage();
   }
 }
 
@@ -44,10 +42,20 @@ class _HomePageState extends State<HomePage> {
         //     content: Text("Login Successfully!"),
         //   ),
         // );
-        Navigator.push(
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => const MainApp(),
+        //   ),
+        // );
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString("password", passController.text);
+        prefs.setString("email", emailController.text);
+
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => const MainApp(),
+            builder: (BuildContext ctx) => const MainApp(),
           ),
         );
       } else {

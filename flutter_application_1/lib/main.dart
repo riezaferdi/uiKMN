@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'LoginPage.dart';
 import 'MyFamily.dart';
+import './bloc/auth_repository.dart';
 
 const List<String> list = <String>[
   'EN',
@@ -26,21 +28,18 @@ class MainApp extends StatefulWidget {
 }
 
 class _MainAppState extends State<MainApp> {
-  int _selectedIndex = 0;
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
+  int selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: BodyApp(),
-        floatingActionButton: CallCenter(),
-        bottomNavigationBar: BottomBar(),
+    return MaterialApp(
+      home: RepositoryProvider(
+        create: (context) => AuthRepository(),
+        child: Scaffold(
+          body: _post.elementAt(selectedIndex),
+          floatingActionButton: const CallCenter(),
+          bottomNavigationBar: BottomBar(selectedIndex),
+        ),
       ),
       debugShowCheckedModeBanner: false,
     );
@@ -172,26 +171,28 @@ class TopBar extends StatelessWidget {
 }
 
 class BottomBar extends StatefulWidget {
-  const BottomBar({super.key});
+  final int index;
+  const BottomBar(this.index, {super.key});
 
   @override
   State<BottomBar> createState() => _BottomBarState();
 }
 
 class _BottomBarState extends State<BottomBar> {
-  int index = 0;
+  //int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       fixedColor: Colors.blue,
       iconSize: 30,
       type: BottomNavigationBarType.fixed,
-      currentIndex: index,
-      onTap: (value) {
-        setState(() {
-          index = value;
-        });
-      },
       items: const [
         BottomNavigationBarItem(
           label: 'Home',
@@ -210,6 +211,8 @@ class _BottomBarState extends State<BottomBar> {
           icon: Icon(Icons.person),
         ),
       ],
+      currentIndex: widget.index,
+      onTap: _onItemTapped,
     );
   }
 }

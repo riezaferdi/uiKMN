@@ -1,89 +1,68 @@
-class ListProfile {
+class ListMyFamily {
+  int? page;
+  int? perPage;
+  String? total;
+  String? totalPages;
+  ListData? data;
+  ListSupport? support;
+
+  ListMyFamily({
+    this.page,
+    this.perPage,
+    this.total,
+    this.totalPages,
+    this.data,
+    this.support,
+  });
+
+  factory ListMyFamily.fromJson(Map<String, dynamic> json) => ListMyFamily(
+        page: json["page"],
+        perPage: json["perPage"],
+        total: json["total"],
+        totalPages: json["totalPages"],
+        data: ListData.fromJson(json['data']),
+        support: ListSupport.fromJson(json['support']),
+      );
+}
+
+class ListData {
   int? id;
-  String? name;
-  String? username;
   String? email;
-  ListAddress? address;
-  String? phone;
-  String? website;
-  ListCompany? company;
+  String? firstName;
+  String? lastName;
+  String? avatar;
 
-  ListProfile({
+  ListData({
     this.id,
-    this.name,
-    this.username,
     this.email,
-    this.address,
-    this.phone,
-    this.website,
-    this.company,
+    this.firstName,
+    this.lastName,
+    this.avatar,
   });
 
-  factory ListProfile.fromJson(Map<String, dynamic> json) => ListProfile(
+  factory ListData.fromJson(Map<String, dynamic> json) => ListData(
         id: json["id"],
-        name: json["name"],
-        username: json["username"],
         email: json["email"],
-        address: ListAddress.fromJson(json['address']),
-        phone: json["phone"],
-        website: json["website"],
-        company: ListCompany.fromJson(json['company']),
+        firstName: json["firstName"],
+        lastName: json["lastName"],
+        avatar: json['avatar']
       );
+
+  // @override
+  // List<Object?> get props => [id, email, firstName, lastName, avatar];
 }
 
-class ListAddress {
-  String? street;
-  String? suite;
-  String? city;
-  String? zipcode;
-  ListGeo? geo;
+class ListSupport {
+  String? url;
+  String? text;
 
-  ListAddress({
-    this.street,
-    this.suite,
-    this.city,
-    this.zipcode,
-    this.geo,
+  ListSupport({
+    this.url,
+    this.text,
   });
 
-  factory ListAddress.fromJson(Map<String, dynamic> json) => ListAddress(
-        street: json["street"],
-        suite: json["suite"],
-        city: json["city"],
-        zipcode: json["zipcode"],
-        geo: ListGeo.fromJson(json['geo'])
-      );
-}
-
-class ListCompany {
-  String? name;
-  String? catchPhrase;
-  String? bs;
-
-  ListCompany({
-    this.name,
-    this.catchPhrase,
-    this.bs,
-  });
-
-  factory ListCompany.fromJson(Map<String, dynamic> json) => ListCompany(
-        name: json["name"],
-        catchPhrase: json["catchPhrase"],
-        bs: json["bs"],
-      );
-}
-
-class ListGeo {
-  String? lat;
-  String? lng;
-
-  ListGeo({
-    this.lat,
-    this.lng,
-  });
-
-  factory ListGeo.fromJson(Map<String, dynamic> json) => ListGeo(
-        lat: json["lat"],
-        lng: json["lng"],
+  factory ListSupport.fromJson(Map<String, dynamic> json) => ListSupport(
+        url: json["url"],
+        text: json["text"],
       );
 }

@@ -1,5 +1,6 @@
 import 'main.dart';
 import 'package:flutter/material.dart';
+import './api/MyFamily_service.dart';
 
 class MyFamilyBody extends StatelessWidget {
   const MyFamilyBody({super.key});
@@ -7,14 +8,14 @@ class MyFamilyBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 24),
+      padding: EdgeInsets.only(top: 24),
       child: SingleChildScrollView(
         child: Column(
           children: [
             const TopBar(),
             SizedBox(
               child: FutureBuilder(
-                future: getProfileData(),
+                future: getFamilyData(),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     //print(snapshot.data?.length);
@@ -25,24 +26,49 @@ class MyFamilyBody extends StatelessWidget {
                       itemBuilder: (context, index) {
                         return GestureDetector(
                           child: Container(
-                            color: Colors.grey.shade200,
+                            color: Colors.grey,
                             child: Column(
                               children: [
-                                Text(
-                                  "${snapshot.data?[index].id! ?? '_'}",
-                                  style: const TextStyle(
-                                    fontSize: 30,
+                                ListTile(
+                                  title: Text(
+                                    "${snapshot.data?[index].data!.firstName ?? '_'} ${snapshot.data?[index].data!.lastName ?? '_'}",
+                                    style: const TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black87,
+                                    ),
+                                    maxLines: 2,
+                                  ),
+                                  subtitle: Text(
+                                    "Source: ${snapshot.data?[index].data!.email ?? '_'}",
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  leading: Container(
+                                    width: 70,
+                                    height: 120,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      image: DecorationImage(
+                                        fit: BoxFit.fill,
+                                        image: NetworkImage(
+                                          snapshot.data?[index].data!.avatar ??
+                                              '_',
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  trailing: Text(
+                                    "${snapshot.data?[index].data!.id ?? '_'}",
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.white,
+                                    ),
+                                    maxLines: 2,
                                   ),
                                 ),
-                                Text(snapshot.data?[index].name! ?? '_'),
-                                Text(snapshot.data?[index].username! ?? '_'),
-                                Text(snapshot.data?[index].email! ?? '_'),
-                                Text(
-                                    "${snapshot.data?[index].address!.street ?? '_'}, ${snapshot.data?[index].address!.suite ?? '_'}, ${snapshot.data?[index].address!.city ?? '_'}, ${snapshot.data?[index].address!.zipcode ?? '_'} geo: ${snapshot.data?[index].address!.geo!.lat ?? '_'}, ${snapshot.data?[index].address!.geo!.lng ?? '_'}"),
-                                Text(snapshot.data?[index].phone! ?? '_'),
-                                Text(snapshot.data?[index].website! ?? '_'),
-                                Text(
-                                    "${snapshot.data?[index].company!.name ?? '_'}: ${snapshot.data?[index].company!.catchPhrase ?? '_'} (${snapshot.data?[index].company!.bs ?? '_'})"),
                                 Container(
                                   height: 10,
                                   color: Colors.white,

@@ -3,7 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import "package:flutter_bloc/flutter_bloc.dart";
+
+// import bloc
+// import './bloc/auth_repository.dart';
+// import './bloc/form_submission_status.dart';
+// import './bloc/login/login_bloc.dart';
+// import './bloc/login/login_event.dart';
+// import "package:flutter_bloc/flutter_bloc.dart";
+// import './bloc/login/login_state.dart';
 //void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -19,6 +26,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final _formKey = GlobalKey<FormState>();
   final apiUrl = "https://reqres.in/api/login";
   TextEditingController emailController = TextEditingController();
   TextEditingController passController = TextEditingController();
@@ -90,42 +98,61 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: <Widget>[
-            TextFormField(
-              controller: emailController,
-              decoration: const InputDecoration(hintText: 'Email'),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            TextFormField(
-              controller: passController,
-              decoration: const InputDecoration(hintText: 'Password'),
-            ),
-            const SizedBox(
-              height: 40,
-            ),
-            ElevatedButton(
-              onPressed: sendPostRequest,
-              child: Container(
-                height: 50,
-                //color: Colors.green,
-                decoration: BoxDecoration(
-                  color: Colors.blue,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: const Center(
-                  child: Text(
-                    'Login',
-                    style: TextStyle(color: Colors.white),
+      body: Form(
+        key: _formKey,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: <Widget>[
+              TextFormField(
+                controller: emailController,
+                decoration: const InputDecoration(hintText: 'Email'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please Enter Your Email!';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              TextFormField(
+                controller: passController,
+                decoration: const InputDecoration(hintText: 'Password'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please Enter Your Password!';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(
+                height: 40,
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    sendPostRequest;
+                  }
+                },
+                child: Container(
+                  height: 50,
+                  //color: Colors.green,
+                  decoration: BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      'Login',
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

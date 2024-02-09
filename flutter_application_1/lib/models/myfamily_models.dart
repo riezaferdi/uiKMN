@@ -1,9 +1,9 @@
 class ListMyFamily {
   int? page;
   int? perPage;
-  String? total;
-  String? totalPages;
-  ListData? data;
+  int? total;
+  int? totalPages;
+  List<ListData>? data;
   ListSupport? support;
 
   ListMyFamily({
@@ -20,7 +20,7 @@ class ListMyFamily {
         perPage: json["perPage"],
         total: json["total"],
         totalPages: json["totalPages"],
-        data: ListData.fromJson(json['data']),
+        data: List<ListData>.from(json['data'].map((x) => ListData.fromJson(x))),
         support: ListSupport.fromJson(json['support']),
       );
 }
@@ -43,8 +43,8 @@ class ListData {
   factory ListData.fromJson(Map<String, dynamic> json) => ListData(
         id: json["id"],
         email: json["email"],
-        firstName: json["firstName"],
-        lastName: json["lastName"],
+        firstName: json["first_name"],
+        lastName: json["last_name"],
         avatar: json['avatar']
       );
 

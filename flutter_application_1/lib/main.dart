@@ -11,9 +11,9 @@ const List<String> list = <String>[
 
 const List<Widget> _post = <Widget>[
   BodyApp(),
-  //ActivityBody(),
+  Text(""),
   MyFamilyBody(),
-  //ProfileBody(),
+  Text(""),
 ];
 
 void main() {
@@ -28,7 +28,13 @@ class MainApp extends StatefulWidget {
 }
 
 class _MainAppState extends State<MainApp> {
-  int selectedIndex = 0;
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,9 +42,33 @@ class _MainAppState extends State<MainApp> {
       home: RepositoryProvider(
         create: (context) => AuthRepository(),
         child: Scaffold(
-          body: _post.elementAt(selectedIndex),
+          body: _post.elementAt(_selectedIndex),
           floatingActionButton: const CallCenter(),
-          bottomNavigationBar: BottomBar(selectedIndex),
+          bottomNavigationBar: BottomNavigationBar(
+            fixedColor: Colors.blue,
+            iconSize: 30,
+            type: BottomNavigationBarType.fixed,
+            items: const [
+              BottomNavigationBarItem(
+                label: 'Home',
+                icon: Icon(Icons.home),
+              ),
+              BottomNavigationBarItem(
+                label: 'Activity',
+                icon: Icon(Icons.dashboard_customize),
+              ),
+              BottomNavigationBarItem(
+                label: 'My Family',
+                icon: Icon(Icons.family_restroom),
+              ),
+              BottomNavigationBarItem(
+                label: 'Profile',
+                icon: Icon(Icons.person),
+              ),
+            ],
+            currentIndex: _selectedIndex,
+            onTap: _onItemTapped,
+          ),
         ),
       ),
       debugShowCheckedModeBanner: false,
@@ -166,53 +196,6 @@ class TopBar extends StatelessWidget {
           ],
         ),
       ],
-    );
-  }
-}
-
-class BottomBar extends StatefulWidget {
-  final int index;
-  const BottomBar(this.index, {super.key});
-
-  @override
-  State<BottomBar> createState() => _BottomBarState();
-}
-
-class _BottomBarState extends State<BottomBar> {
-  //int _selectedIndex = 0;
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      fixedColor: Colors.blue,
-      iconSize: 30,
-      type: BottomNavigationBarType.fixed,
-      items: const [
-        BottomNavigationBarItem(
-          label: 'Home',
-          icon: Icon(Icons.home),
-        ),
-        BottomNavigationBarItem(
-          label: 'Activity',
-          icon: Icon(Icons.dashboard_customize),
-        ),
-        BottomNavigationBarItem(
-          label: 'My Family',
-          icon: Icon(Icons.family_restroom),
-        ),
-        BottomNavigationBarItem(
-          label: 'Profile',
-          icon: Icon(Icons.person),
-        ),
-      ],
-      currentIndex: widget.index,
-      onTap: _onItemTapped,
     );
   }
 }
